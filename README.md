@@ -1,38 +1,45 @@
-⚡ Lightning Node Project Summary
-✅ Goal:
-Run a Bitcoin + Lightning Network node on SBC hardware (currently LeefBox with Armbian) to potentially earn routing fees and learn the Lightning ecosystem.
+# Bitcoin-Lightning-Node for RK322x
 
-🖥️ Current Setup:
-Component	Status
-Hardware	LeefBox (RK322x-based), Armbian
-Bitcoin Core	✅ Compiled (v26.0), syncing blockchain (pruned mode, last ~30 days)
-Core Lightning (CLN)	✅ Compiled (v25.02.2), running, connected to Bitcoin Core
-Configurations	Matching rpcuser / rpcpassword ✔
-Logs	Bitcoin: ~/.bitcoin/debug.log
-CLN: Custom log file via --log-file
-Backup Plan	NAND backup planned before hardware transfer to M9S Pro
+**How to run a Bitcoin Lightning node on devices using the RK322x ARM CPU.**  
+Tested on LeefBox and other RK322x-based Android TV boxes running Armbian.
 
-⚙️ Next Planned Steps:
-Finish Bitcoin Core sync
+---
 
-Generate Bitcoin address for funding Lightning wallet
+## ✅ Features
+- **Bitcoin Core** (headless / no GUI)
+- **Core Lightning (CLN)** for Lightning Network support
+- Lightweight, works on ARMv7 single-board computers and TV boxes
+- Ideal for **low-cost Lightning routing** or as a learning project
 
-Connect to peers
+---
 
-Open Lightning channels
+## 📋 Requirements
+- RK322x-based device (e.g., LeefBox, MXQ Pro, M9S Pro)
+- **Armbian Bookworm** (or compatible) installed  
+  ➔ [https://github.com/armbian/community/releases](https://github.com/armbian/community/releases)
+- 8GB+ SD card / eMMC / USB storage (preferably larger for better blockchain storage)
+- Basic Linux knowledge
+- Internet connection
 
-Begin routing transactions → potential to earn fees over time
+---
 
-Monitor node performance and possibly advertise node for routing traffic
+## ⚙️ Installation Guide
 
-📝 Optional Future Enhancements:
-Migrate setup to M9S Pro (with NAND backup/fallback plan)
+### 1️⃣ Install Armbian
+Use official Armbian builds or community-maintained versions for RK322x devices:  
+[Armbian Community Builds](https://github.com/armbian/community/releases)
 
-Automate with systemd services for autostart
+---
 
-Set up external backups for wallet data
+### 2️⃣ Build Bitcoin Core
+```bash
+sudo apt-get update
+sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils git
+sudo apt-get install libboost-system-dev libboost-filesystem-dev libboost-chrono-dev libboost-test-dev libboost-thread-dev
 
-Add Tor for privacy
-
-Use Amboss or 1ML to list node publicly if desired
-
+git clone https://github.com/bitcoin/bitcoin.git
+cd bitcoin
+./autogen.sh
+./configure --without-gui
+make -j$(nproc)
+sudo make install
