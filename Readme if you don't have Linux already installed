@@ -1,0 +1,3 @@
+if your devices is running android please bern the copy of multitool.img using belen echer 
+a 8gb sd card is required when the flashing is complete un plug the sd card then re install it and there should be a ntfs partion resize it if need but on the drive copy the contence for the armbian zip to it 
+  hold down the recovery botton (mainly in the avport )untill it boots to multiboot it will restart 2 times when comying to the ram then folow instructions
